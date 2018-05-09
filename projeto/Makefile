@@ -1,2 +1,2 @@
 all:
-	g++ -o main main.cpp -lsfml-system -lsfml-graphics -lsfml-window
+	g++ -std=c++14 -o main main.cpp -lsfml-system -lsfml-graphics -lsfml-window
