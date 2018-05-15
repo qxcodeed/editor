@@ -12,6 +12,14 @@ struct Ambiente{
     Ambiente(){
         cursor = texto.end();
     }
+    //construtor de cópia
+    Ambiente(const Ambiente& other):
+        texto(other.texto)
+    {
+        this->cursor = this->texto.begin();
+        for(auto it = other.texto.begin(); it != other.cursor; it++)
+            this->cursor++;
+    }
 
     string toString(){
         stringstream ss;
@@ -33,6 +41,7 @@ int main()
     amb.texto.push_back('m');
     amb.texto.push_back('o');
     amb.texto.push_back('r');
+    amb.cursor = amb.texto.end();
 
     sf::RenderWindow janela(sf::VideoMode(800, 600), "Janela");
 
@@ -51,6 +60,8 @@ int main()
                 }
                 else if((event.key.code >= sf::Keyboard::A) && (event.key.code <= sf::Keyboard::Z)){
                     char tecla = (event.key.code - sf::Keyboard::A) + 'a';
+                    if(event.key.shift)
+                        tecla += -'a' + 'A';
                     cout << tecla << endl;
                 }
                 else if((event.key.code == sf::Keyboard::Return)){
