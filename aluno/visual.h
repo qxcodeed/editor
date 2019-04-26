@@ -12,6 +12,8 @@ using namespace std;
 //path da font, altere se precisar
 //const string font_path = "../projeto/ed_font.ttf";
 
+#define NEW_SFML 0
+
 //uma funcao feia, mas simples.
 //pega alguns caracteres, inclusive separando maiúsculos.
 //se a tecla nao corresponder a um char printável, retorna '\0'
@@ -31,8 +33,6 @@ char sf2char(sf::Event event){
         return shift ? '{': '[';
     else if(key == sf::Keyboard::RBracket)     ///< The ] key
         return shift ? '}': ']';
-    else if(key == sf::Keyboard::Semicolon)    ///< The ; key
-        return shift ? ':': ';';
     else if(key == sf::Keyboard::Comma)        ///< The , key
         return shift ? '<': ',';
     else if(key == sf::Keyboard::Period)       ///< The . key
@@ -43,12 +43,23 @@ char sf2char(sf::Event event){
         return '/';
     else if(key == sf::Keyboard::Equal)
         return shift ? '=': '=';
-    else if(key == sf::Keyboard::Hyphen)
-        return shift ? '_': '-';
     else if(key == sf::Keyboard::Space)
         return ' ';
+#if NEW_SFML
+    else if(key == sf::Keyboard::Semicolon)    ///< The ; key
+        return shift ? ':': ';';
+    else if(key == sf::Keyboard::Hyphen)
+        return shift ? '_': '-';
     else if(key == sf::Keyboard::Enter)
         return '\n';
+#else
+    else if(key == sf::Keyboard::SemiColon)    ///< The ; key
+        return shift ? ':': ';';
+    else if(key == sf::Keyboard::Comma)
+        return shift ? '_': '-';
+    else if(key == sf::Keyboard::Return)
+        return '\n';
+#endif
     return '\0';
 }
 
@@ -64,8 +75,12 @@ public:
 
 sfText::sfText(sf::Vector2f pos, string texto, sf::Color color, int size){
     this->setFont(*this->get_default_font());
+#if NEW_SFML
     this->setFillColor(color);
     this->setOutlineColor(color);
+#else
+    this->setColor(color);
+#endif
     this->setPosition(pos);
     this->setString(texto);
     this->setCharacterSize(size);
