@@ -12,7 +12,8 @@ using namespace std;
 //path da font, altere se precisar
 //const string font_path = "../projeto/ed_font.ttf";
 
-#define NEW_SFML 0
+#define NEW_SFML_KEYS 0
+#define NEW_SFML_COLOR 1
 
 //uma funcao feia, mas simples.
 //pega alguns caracteres, inclusive separando maiúsculos.
@@ -45,7 +46,7 @@ char sf2char(sf::Event event){
         return shift ? '=': '=';
     else if(key == sf::Keyboard::Space)
         return ' ';
-#if NEW_SFML
+#if NEW_SFML_KEYS
     else if(key == sf::Keyboard::Semicolon)    ///< The ; key
         return shift ? ':': ';';
     else if(key == sf::Keyboard::Hyphen)
@@ -75,7 +76,7 @@ public:
 
 sfText::sfText(sf::Vector2f pos, string texto, sf::Color color, int size){
     this->setFont(*this->get_default_font());
-#if NEW_SFML
+#if NEW_SFML_COLOR
     this->setFillColor(color);
     this->setOutlineColor(color);
 #else
